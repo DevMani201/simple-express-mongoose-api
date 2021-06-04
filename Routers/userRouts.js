@@ -25,7 +25,7 @@ router.post("/save-details", async (req, res) => {
         if (phone.toString().length != 10 || !/[6-9][0-9]{9}/.test(phone)) {
             return res.status(422).json({ error: "Phone Number must be 10 digit and start with 6,7,8 or 9" });
         }
-    console.log(phone.toString().length);
+    
 
         const UserExist = await User.findOne({ email: email });
         // console.log(dbEmail);
