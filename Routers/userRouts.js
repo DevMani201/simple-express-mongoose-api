@@ -30,7 +30,7 @@ router.post("/save-details", async (req, res) => {
         const UserExist = await User.findOne({ email: email });
         // console.log(dbEmail);
         if (UserExist) {
-            return res.status(422).json({ error: "User Exist" });
+            return res.status(411).json({ error: "User Exist" });
         }
         if (password != cpassword) {
             return res.status(422).json({ error: "password are not matched" });
@@ -96,9 +96,17 @@ router.get("/login", (req, res) => {
 
 router.delete("/delete-details/:id", async (req, res) => {
     try {
+       
         const deleteUser = await User.findByIdAndDelete(req.params.id);
-        //  res.send(deleteUser)
-        res.status(200).json({ message: 'Delete Successfully' });
+
+      
+        
+        if(!deleteUser){
+            res.status(422).json({ error: 'Not Found' });
+        }else {
+            res.status(200).json({ message: 'Delete Successfully' });
+        }
+       
     } catch (e) {
         res.send(e);
     }
